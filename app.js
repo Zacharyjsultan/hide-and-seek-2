@@ -17,6 +17,12 @@ const hidingPlaces = ['tree', 'shed', 'boulder'];
 let correctGuesses = 0;
 let totalGuesses = 0;
 
+function getRandomItem(arr){
+    const index = Math.floor(Math.random()* arr.length);
+
+    return arr[index];
+}
+
 shedButton.addEventListener('click', () => {
     const hidingSpot = Math.floor(Math.random() * 3);
     const answer = hidingPlaces[hidingSpot];
@@ -35,11 +41,35 @@ boulderButton.addEventListener('click', () => {
     handleGuess(answer, 'boulder');
 });
 
+function resetStyles() {
+    shedContainer.classList.remove('face');
+    treeContainer.classList.remove('face');
+    boulderContainer.classList.remove('face');
+}
+
 function handleGuess(correctSpot, userGuess) {
+    resetStyles();
+
+    const correctHidingPlaceEl = document.getElementById(`${correctSpot}-container`);
     // reset the styles
+
     // then increment the guesses
+    totalGuesses++;
+
     // then grab the appropriate container element for the correct guess from the DOM
+
     // then add the face class to that element so that the face shows up
+    const face = document.getElementById(`${correctSpot}-container`);
+    face.classList.add('face');
     // then if the user guess is correct, increment the correct guesses
+    if (userGuess === correctSpot){
+        correctGuesses++;
+    }
+
     // update the DOM to show this change to the user (including the losses, not tracked directly in state)
+
+totalEl.textContent = totalGuesses;
+winsEl.textContent = correctGuesses;
+lossesEl.textContent = totalGuesses - correctGuesses;
+
 }
